@@ -7,8 +7,8 @@ interface CreateQuestionResult {
 }
 
 const CREATE_QUESTION = `
-    mutation CreateQuestion($label: String!) {
-	createQuestion(label: $label) {
+    mutation CreateQuestion($label: String!, $predefinedAnswers: [String]) {
+	createQuestion(label: $label, predefinedAnswers: $predefinedAnswers) {
 	    id
 	    label
 	    createdAt
@@ -23,7 +23,10 @@ function CreateQuestion() {
   ] = useMutation<CreateQuestionResult>(CREATE_QUESTION);
 
   function handleOnSubmit(newQuestion: NewQuestion) {
-    createQuestion(newQuestion);
+    createQuestion({
+	label: newQuestion.label,
+	predefinedAnswers: newQuestion.predefinedAnswers.map(pa => pa.label).filter(pa => !!pa)
+    });
   }
 
   if (!createQuestionResult.data && createQuestionResult.fetching) {
