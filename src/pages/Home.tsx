@@ -1,7 +1,7 @@
-import CreateQuestion from '../features/questions/CreateQuestion';
+import CreateQuestion from "../features/questions/CreateQuestion";
 
 function Home() {
-  return (<CreateQuestion />);
+  return <CreateQuestion />;
 }
 
 export default Home;

@@ -1,19 +1,18 @@
-
 interface Question {
-    id: string,
-    label: string,
-    predefinedAnswers: Array<PredefinedAnswer>
+  id: string;
+  label: string;
+  predefinedAnswers: Array<PredefinedAnswer>;
 
-    createdAt: Date,
-    updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface PredefinedAnswer {
-    id: string,
-    label: string,
+  id: string;
+  label: string;
 
-    createdAt: Date,
-    updatedAt: Date
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export type { Question, PredefinedAnswer }
+export type { Question, PredefinedAnswer };
