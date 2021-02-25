@@ -1,12 +1,12 @@
 import { useForm, useFieldArray } from "react-hook-form";
 
 type NewPredefinedAnswer = {
-    label: string
-}
+  label: string;
+};
 
 export type NewQuestion = {
   label: string;
-  predefinedAnswers: Array<NewPredefinedAnswer> 
+  predefinedAnswers: Array<NewPredefinedAnswer>;
 };
 
 interface Props {
@@ -14,14 +14,21 @@ interface Props {
 }
 
 function NewQuestionForm({ onSubmit }: Props) {
-  const { register, handleSubmit, reset, errors, control, getValues } = useForm<NewQuestion>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    errors,
+    control,
+    getValues,
+  } = useForm<NewQuestion>({
     mode: "onBlur",
-    defaultValues: { label: "", predefinedAnswers: [{label: ""}] },
+    defaultValues: { label: "", predefinedAnswers: [{ label: "" }] },
   });
 
   const { fields, append, remove } = useFieldArray<NewPredefinedAnswer>({
     control,
-    name: "predefinedAnswers"
+    name: "predefinedAnswers",
   });
 
   function handleOnSubmit(newQuestion: NewQuestion) {
@@ -32,18 +39,22 @@ function NewQuestionForm({ onSubmit }: Props) {
   }
 
   function handleAnswerChange(answerIndex: number) {
-	if(answerIndex === fields.length - 1) {
-	    if(getValues(`predefinedAnswers[${answerIndex}].label`)) {
-	       append({label: ""}, false) 
-	    }
-	}
+    if (answerIndex === fields.length - 1) {
+      if (getValues(`predefinedAnswers[${answerIndex}].label`)) {
+        append({ label: "" }, false);
+      }
     }
+  }
 
   function handleAnswerBlur(answerIndex: number) {
-	if(answerIndex !== fields.length - 1 && fields.length > 1 && !getValues(`predefinedAnswers[${answerIndex}].label`) ) {
-	    remove(answerIndex) 
-	}
+    if (
+      answerIndex !== fields.length - 1 &&
+      fields.length > 1 &&
+      !getValues(`predefinedAnswers[${answerIndex}].label`)
+    ) {
+      remove(answerIndex);
     }
+  }
 
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>
@@ -54,20 +65,18 @@ function NewQuestionForm({ onSubmit }: Props) {
         ref={register({ required: true })}
       />
       {errors["label"] && <span>This field is required</span>}
-      {
-	fields.map((pa, index) => (
-	<input
-	  key={pa.id}
-	  type="text"
-	  placeholder="Type an answer"
-	  name={`predefinedAnswers[${index}].label`}
-	  ref={register()}
-	  onChange={() => handleAnswerChange(index)}
-	  onBlur={() => handleAnswerBlur(index)}
-	  defaultValue={pa.label} // make sure to set up defaultValue
-	/>
-      ))
-      }
+      {fields.map((pa, index) => (
+        <input
+          key={pa.id}
+          type="text"
+          placeholder="Type an answer"
+          name={`predefinedAnswers[${index}].label`}
+          ref={register()}
+          onChange={() => handleAnswerChange(index)}
+          onBlur={() => handleAnswerBlur(index)}
+          defaultValue={pa.label} // make sure to set up defaultValue
+        />
+      ))}
       <button type="submit">Create new question</button>
     </form>
   );

@@ -24,8 +24,10 @@ function CreateQuestion() {
 
   function handleOnSubmit(newQuestion: NewQuestion) {
     createQuestion({
-	label: newQuestion.label,
-	predefinedAnswers: newQuestion.predefinedAnswers.map(pa => pa.label).filter(pa => !!pa)
+      label: newQuestion.label,
+      predefinedAnswers: newQuestion.predefinedAnswers
+        .map((pa) => pa.label)
+        .filter((pa) => !!pa),
     });
   }
 

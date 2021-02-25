@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+import AppRouter from "./AppRouter";
 import { Provider } from "urql";
 import { initUrqlClient } from "./urqlClient";
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <Provider value={urqlClient}>
       <div className="App">
-        <Home />
+        <AppRouter />
       </div>
     </Provider>
   );
