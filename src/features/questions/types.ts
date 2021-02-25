@@ -10,6 +10,7 @@ interface Question {
 interface PredefinedAnswer {
   id: string;
   label: string;
+  votesCount: number;
 
   createdAt: Date;
   updatedAt: Date;
