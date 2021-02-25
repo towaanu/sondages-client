@@ -1,6 +1,6 @@
 import { useQuery } from "urql";
 import { Question } from "../questions/types";
-import PollResult from "./PollResult";
+import PollResults from "./PollResults";
 
 const QUESTION = `
     query Question($id: ID!) {
@@ -38,15 +38,8 @@ function Poll({ questionId }: Props) {
     return (
       <>
         <h1> {question.label} </h1>
-        <ul>
-          {question.predefinedAnswers.map((answer) => (
-            <li key={answer.id}>
-              {answer.label} ({answer.votesCount})
-            </li>
-          ))}
-        </ul>
-        <h1> Result </h1>
-        <PollResult question={question} />
+        <h1> Results </h1>
+        <PollResults question={question} />
       </>
     );
   }

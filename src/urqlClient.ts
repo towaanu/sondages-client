@@ -1,6 +1,13 @@
-import { createClient, Client, dedupExchange, fetchExchange } from "urql";
+import {
+  createClient,
+  Client,
+  dedupExchange,
+  fetchExchange,
+  subscriptionExchange,
+} from "urql";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import { Question } from "./features/questions/types";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 
 function initUrqlClient(): Client {
   const cache = cacheExchange({
@@ -19,9 +26,18 @@ function initUrqlClient(): Client {
     },
   });
 
+  const subscriptionClient = new SubscriptionClient(
+    "ws://localhost:3030/subscriptions",
+    { reconnect: true }
+  );
+
+  const subExchange = subscriptionExchange({
+    forwardSubscription: (operation) => subscriptionClient.request(operation),
+  });
+
   return createClient({
     url: "http://localhost:3030/graphql",
-    exchanges: [dedupExchange, cache, fetchExchange],
+    exchanges: [dedupExchange, cache, fetchExchange, subExchange],
   });
 }
 
