@@ -37,8 +37,8 @@ function Poll({ questionId }: Props) {
     const { question } = questionResult.data;
     return (
       <>
-        <h1> {question.label} </h1>
-        <h1> Results </h1>
+        <h1 className="title is-1"> {question.label} </h1>
+        <h4 className="title is-4"> Results </h4>
         <PollResults question={question} />
       </>
     );

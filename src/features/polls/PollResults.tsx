@@ -15,20 +15,29 @@ function PollResults({ question }: Props) {
   }
 
   return (
-    <>
-      <ul>
+    <div className="columns is-vcentered">
+      <div className="column is-one-third">
         {question.predefinedAnswers.map((answer) => (
-          <li>
-            {answer.label}:{answersResults[parseInt(answer.id)]} (
-            {percentageForAnswer(parseInt(answer.id)).toFixed(0)}%)
-          </li>
+          <div className="columns is-mobile" key={answer.id}>
+            <div className="column has-text-weight-bold">{answer.label}</div>
+            <div className="column is-one-quarter">
+              {answersResults[parseInt(answer.id)]}
+            </div>
+            <div className="column is-one-quarter">
+              <span className="tag is-info is-light">
+                {percentageForAnswer(parseInt(answer.id)).toFixed(0)}%
+              </span>
+            </div>
+          </div>
         ))}
-      </ul>
-      <PollChart
-        answers={question.predefinedAnswers}
-        answersResults={answersResults}
-      />
-    </>
+      </div>
+      <div className="column">
+        <PollChart
+          answers={question.predefinedAnswers}
+          answersResults={answersResults}
+        />
+      </div>
+    </div>
   );
 }
 
