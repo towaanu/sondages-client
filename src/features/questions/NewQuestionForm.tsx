@@ -22,8 +22,34 @@ function NewQuestionForm({ onSubmit }: Props) {
     control,
     getValues,
   } = useForm<NewQuestion>({
-    mode: "onBlur",
     defaultValues: { label: "", predefinedAnswers: [{ label: "" }] },
+    resolver: async (values: NewQuestion) => {
+      let errors: any = {};
+
+      if (!values.label) {
+        errors.label = {
+          type: "required",
+          message: "Question label is required",
+        };
+      }
+
+      const answersSet = new Set(values.predefinedAnswers.map((a) => a.label));
+      if (answersSet.size !== values.predefinedAnswers.length) {
+        errors.predefinedAnswers = {
+          type: "uniqueAnswer",
+          message: "Answers should be unique",
+        };
+      }
+
+      if (values.predefinedAnswers.length < 2) {
+        errors.predefinedAnswers = {
+          type: "twoAnswer",
+          message: "You need at least 2 answers",
+        };
+      }
+
+      return { values, errors };
+    },
   });
 
   const { fields, append, remove } = useFieldArray<NewPredefinedAnswer>({
@@ -34,8 +60,10 @@ function NewQuestionForm({ onSubmit }: Props) {
   function handleOnSubmit(newQuestion: NewQuestion) {
     if (onSubmit) {
       onSubmit({
-      ...newQuestion,
-      predefinedAnswers: newQuestion.predefinedAnswers.filter(pa => !!pa.label)
+        ...newQuestion,
+        predefinedAnswers: newQuestion.predefinedAnswers.filter(
+          (pa) => !!pa.label
+        ),
       });
     }
     reset();
@@ -74,6 +102,11 @@ function NewQuestionForm({ onSubmit }: Props) {
         </div>
         {errors["label"] && (
           <p className="help is-danger">The question is required</p>
+        )}
+        {errors["predefinedAnswers"] && (
+          <p className="help is-danger">
+            {(errors.predefinedAnswers as any).message}
+          </p>
         )}
       </div>
       {fields.map((pa, index) => (
