@@ -11,6 +11,7 @@ function PollResults({ question }: Props) {
   const totalVotes = Object.values(answersResults).reduce((a, b) => a + b);
 
   function percentageForAnswer(answerId: number): number {
+    if (totalVotes === 0) return 0;
     return (answersResults[answerId] / totalVotes) * 100;
   }
 
