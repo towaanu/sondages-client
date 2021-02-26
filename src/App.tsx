@@ -7,9 +7,11 @@ const urqlClient = initUrqlClient();
 function App() {
   return (
     <Provider value={urqlClient}>
-      <div className="App">
-        <AppRouter />
-      </div>
+      <section className="section">
+        <div className="container">
+          <AppRouter />
+        </div>
+      </section>
     </Provider>
   );
 }

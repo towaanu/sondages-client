@@ -42,7 +42,7 @@ function CreateQuestion() {
   if (createQuestionResult.data) {
     return (
       <>
-        <h1> New question created </h1>
+        <h1 className="title"> New question created </h1>
         <ul>
           <li>id: {createQuestionResult.data.createQuestion.id}</li>
           <li>label: {createQuestionResult.data.createQuestion.label}</li>
@@ -57,8 +57,12 @@ function CreateQuestion() {
 
   return (
     <>
-      <h1> Create a new question !</h1>
-      <NewQuestionForm onSubmit={handleOnSubmit} />
+      <h1 className="title"> Create a new question !</h1>
+      <div className="columns is-centered">
+        <div className="column is-half">
+          <NewQuestionForm onSubmit={handleOnSubmit} />
+        </div>
+      </div>
     </>
   );
 }

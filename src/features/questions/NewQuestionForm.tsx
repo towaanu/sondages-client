@@ -58,26 +58,44 @@ function NewQuestionForm({ onSubmit }: Props) {
 
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>
-      <input
-        name="label"
-        type="text"
-        placeholder="Type your question"
-        ref={register({ required: true })}
-      />
-      {errors["label"] && <span>This field is required</span>}
+      <div className="field">
+        <label className="label">Question</label>
+        <div className="control">
+          <input
+            className={`input ${errors["label"] ? "is-danger" : ""}`}
+            name="label"
+            type="text"
+            placeholder="Type your question"
+            ref={register({ required: true })}
+          />
+        </div>
+        {errors["label"] && (
+          <p className="help is-danger">The question is required</p>
+        )}
+      </div>
       {fields.map((pa, index) => (
-        <input
-          key={pa.id}
-          type="text"
-          placeholder="Type an answer"
-          name={`predefinedAnswers[${index}].label`}
-          ref={register()}
-          onChange={() => handleAnswerChange(index)}
-          onBlur={() => handleAnswerBlur(index)}
-          defaultValue={pa.label} // make sure to set up defaultValue
-        />
+        <div className="field">
+          <input
+            className="input"
+            key={pa.id}
+            type="text"
+            placeholder="Type an answer"
+            name={`predefinedAnswers[${index}].label`}
+            ref={register()}
+            onChange={() => handleAnswerChange(index)}
+            onBlur={() => handleAnswerBlur(index)}
+            defaultValue={pa.label}
+          />
+        </div>
       ))}
-      <button type="submit">Create new question</button>
+
+      <div className="field">
+        <div className="control">
+          <button className="button is-link" type="submit">
+            Create a new question
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
