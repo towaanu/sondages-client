@@ -33,7 +33,7 @@ function Poll({ questionId }: Props) {
     return <div> Error: Unable to find question </div>;
   }
 
-  if (questionResult.data) {
+  if (questionResult.data && questionResult.data.question) {
     const { question } = questionResult.data;
     return (
       <>
