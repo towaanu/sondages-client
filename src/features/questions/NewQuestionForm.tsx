@@ -33,7 +33,10 @@ function NewQuestionForm({ onSubmit }: Props) {
 
   function handleOnSubmit(newQuestion: NewQuestion) {
     if (onSubmit) {
-      onSubmit(newQuestion);
+      onSubmit({
+      ...newQuestion,
+      predefinedAnswers: newQuestion.predefinedAnswers.filter(pa => !!pa.label)
+      });
     }
     reset();
   }
