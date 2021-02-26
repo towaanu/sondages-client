@@ -74,7 +74,7 @@ function NewQuestionForm({ onSubmit }: Props) {
         )}
       </div>
       {fields.map((pa, index) => (
-        <div className="field">
+        <div key={pa.id} className="field">
           <input
             className="input"
             key={pa.id}

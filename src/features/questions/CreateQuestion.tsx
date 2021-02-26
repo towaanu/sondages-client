@@ -1,6 +1,7 @@
 import { useMutation } from "urql";
 import NewQuestionForm, { NewQuestion } from "./NewQuestionForm";
 import { Question } from "./types";
+import { Redirect } from "react-router-dom";
 
 interface CreateQuestionResult {
   createQuestion: Question;
@@ -40,19 +41,8 @@ function CreateQuestion() {
   }
 
   if (createQuestionResult.data) {
-    return (
-      <>
-        <h1 className="title"> New question created </h1>
-        <ul>
-          <li>id: {createQuestionResult.data.createQuestion.id}</li>
-          <li>label: {createQuestionResult.data.createQuestion.label}</li>
-          <li>
-            createdAt:
-            {createQuestionResult.data.createQuestion.createdAt.toLocaleString()}
-          </li>
-        </ul>
-      </>
-    );
+    const { createQuestion: newQuestion } = createQuestionResult.data;
+    return <Redirect to={`/question/${newQuestion.id}`} />;
   }
 
   return (
