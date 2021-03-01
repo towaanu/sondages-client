@@ -41,7 +41,7 @@ function NewQuestionForm({ onSubmit }: Props) {
         };
       }
 
-      if (values.predefinedAnswers.length < 2) {
+      if (values.predefinedAnswers.filter(a => !!a.label).length < 2) {
         errors.predefinedAnswers = {
           type: "twoAnswer",
           message: "You need at least 2 answers",
