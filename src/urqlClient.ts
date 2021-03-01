@@ -9,6 +9,7 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import { Question } from "./features/questions/types";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
+console.log("PROCESS ENV ", process.env)
 function initUrqlClient(): Client {
   const cache = cacheExchange({
     resolvers: {
@@ -27,7 +28,7 @@ function initUrqlClient(): Client {
   });
 
   const subscriptionClient = new SubscriptionClient(
-    "ws://localhost:3030/subscriptions",
+    process.env["REACT_APP_WS_ENDPOINT"],
     { reconnect: true }
   );
 
@@ -36,7 +37,7 @@ function initUrqlClient(): Client {
   });
 
   return createClient({
-    url: "http://localhost:3030/graphql",
+    url: process.env["REACT_APP_GRAPHQL_ENDPOINT"],
     exchanges: [dedupExchange, cache, fetchExchange, subExchange],
   });
 }
