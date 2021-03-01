@@ -9,7 +9,6 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import { Question } from "./features/questions/types";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
-console.log("PROCESS ENV ", process.env)
 function initUrqlClient(): Client {
   const cache = cacheExchange({
     resolvers: {
