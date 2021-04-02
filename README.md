@@ -23,5 +23,5 @@ The app should be accessible at http://localhost:3000
 
 ### Production build
 You can get a production build using docker with the following command : \
-`./docker.run.sh` \
+`./docker.build.sh` \
 This command will create a build folder inside the current folder.
